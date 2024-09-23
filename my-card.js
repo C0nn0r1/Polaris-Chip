@@ -17,10 +17,10 @@ export class MyCard extends LitElement {
 
   constructor() {
     super();
-    this.title = 'Default Title';
-    this.description = 'Default Description';
+    this.title = 'Hax the Web with your Skills';
+    this.description = 'Join our HaxTheWeb club to hack and code the web!';
     this.imgSrc = 'https://miro.medium.com/v2/resize:fit:1280/0*ngAthWxOvKZHvsw9';
-    this.adText = 'Default Ad Text';
+    this.adText = 'Join Today';
     this.link = 'https://hax.psu.edu';
   }
 
