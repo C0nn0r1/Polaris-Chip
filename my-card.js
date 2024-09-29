@@ -12,6 +12,7 @@ export class MyCard extends LitElement {
       imgSrc: { type: String },
       adText: { type: String },
       link: { type: String }
+      fancy: { type: Boolean reflect: true }
     };
   }
 
@@ -23,12 +24,23 @@ export class MyCard extends LitElement {
     this.adText = 'Join Today';
     this.link = 'https://hax.psu.edu';
   }
-
+constructor() {
+    super();
+    this.title = 'Hax the Web with your Skills';
+    this.imgSrc = 'https://miro.medium.com/v2/resize:fit:1280/0*ngAthWxOvKZHvsw9';
+    this.adText = 'Join Today';
+    this.fancy = false;
+  }
   static get styles() {
     return css`
       :host {
         display: block;
         margin: 16px;
+      }
+      :host([fancy]) {
+        background-color: pink;
+        border: 2px solid fuchsia;
+        box-shadow: 10px 5px 5px red;
       }
       .card {
         width: 100%;
@@ -52,8 +64,10 @@ export class MyCard extends LitElement {
       .card__img {
         width: 100%;
         max-width: 280px;
-        margin: 16px 0;
+        height: auto; 
+        max-height: 200px;
         border-radius: 8px;
+        object-fit: cover;
       }
       .card__ad {
         color: black;
@@ -85,7 +99,12 @@ export class MyCard extends LitElement {
     return html`
       <div class="card">
         <h1 class="card__head">${this.title}</h1>
-        <p class="card__descr">${this.description}</p>
+         <details ?open="${this.fancy}" @toggle="${this.openChanged}">
+          <summary>Description</summary>
+          <div>
+            <slot></slot>
+          </div>
+        </details>
         <img class="card__img" src="${this.imgSrc}" alt="Card Image">
         <p class="card__ad">${this.adText}</p>
         <button class="card__apply">
@@ -94,6 +113,10 @@ export class MyCard extends LitElement {
       </div>
     `;
   }
+ openChanged(e) {
+    this.fancy = e.target.open;
+  }
+}
 }
 
 customElements.define(MyCard.tag, MyCard);
