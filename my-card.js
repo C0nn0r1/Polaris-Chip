@@ -12,7 +12,7 @@ export class MyCard extends LitElement {
       imgSrc: { type: String },
       adText: { type: String },
       link: { type: String },
-     fancy: { type: Boolean reflect: true }
+      fancy: { type: Boolean reflect: true }
     };
   }
 
