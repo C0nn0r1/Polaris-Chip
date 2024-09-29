@@ -23,6 +23,7 @@ export class MyCard extends LitElement {
     this.imgSrc = 'https://miro.medium.com/v2/resize:fit:1280/0*ngAthWxOvKZHvsw9';
     this.adText = 'Join Today';
     this.link = 'https://hax.psu.edu';
+     this.fancy = false;
   }
 constructor() {
     super();
@@ -102,7 +103,7 @@ constructor() {
          <details ?open="${this.fancy}" @toggle="${this.openChanged}">
           <summary>Description</summary>
           <div>
-            <slot></slot>
+            <slot>${this.description}</slot>
           </div>
         </details>
         <img class="card__img" src="${this.imgSrc}" alt="Card Image">
