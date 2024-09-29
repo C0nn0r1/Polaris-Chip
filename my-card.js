@@ -11,8 +11,8 @@ export class MyCard extends LitElement {
       description: { type: String },
       imgSrc: { type: String },
       adText: { type: String },
-      link: { type: String }
-      fancy: { type: Boolean reflect: true }
+      link: { type: String },
+     fancy: { type: Boolean reflect: true }
     };
   }
 
@@ -23,7 +23,7 @@ export class MyCard extends LitElement {
     this.imgSrc = 'https://miro.medium.com/v2/resize:fit:1280/0*ngAthWxOvKZHvsw9';
     this.adText = 'Join Today';
     this.link = 'https://hax.psu.edu';
-     this.fancy = false;
+    this.fancy = false;
   }
 constructor() {
     super();
