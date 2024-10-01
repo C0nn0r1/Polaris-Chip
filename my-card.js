@@ -118,6 +118,5 @@ constructor() {
     this.fancy = e.target.open;
   }
 }
-}
 
 customElements.define(MyCard.tag, MyCard);
