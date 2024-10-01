@@ -12,7 +12,7 @@ export class MyCard extends LitElement {
       imgSrc: { type: String },
       adText: { type: String },
       link: { type: String },
-      fancy: { type: Boolean reflect: true }
+      fancy: { type: Boolean, reflect: true }
     };
   }
 
@@ -25,13 +25,7 @@ export class MyCard extends LitElement {
     this.link = 'https://hax.psu.edu';
     this.fancy = false;
   }
-constructor() {
-    super();
-    this.title = 'Hax the Web with your Skills';
-    this.imgSrc = 'https://miro.medium.com/v2/resize:fit:1280/0*ngAthWxOvKZHvsw9';
-    this.adText = 'Join Today';
-    this.fancy = false;
-  }
+  
   static get styles() {
     return css`
       :host {
