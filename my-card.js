@@ -12,7 +12,9 @@ export class MyCard extends LitElement {
       imgSrc: { type: String },
       adText: { type: String },
       link: { type: String },
-      fancy: { type: Boolean, reflect: true }
+      fancy: { type: Boolean, reflect: true },
+      selectedAnswers: { type: Array }, 
+      feedback: { type: String } 
     };
   }
 
@@ -24,8 +26,10 @@ export class MyCard extends LitElement {
     this.adText = 'Join Today';
     this.link = 'https://hax.psu.edu';
     this.fancy = false;
+    this.selectedAnswers = []; 
+    this.feedback = ''; 
   }
-  
+
   static get styles() {
     return css`
       :host {
@@ -87,7 +91,49 @@ export class MyCard extends LitElement {
       .card__apply:hover {
         background-color: darkblue;
       }
+      .multiple-choice {
+        text-align: left;
+        margin-top: 16px;
+      }
+      .feedback {
+        font-weight: bold;
+        color: green;
+        margin-top: 10px;
+      }
+      .feedback.incorrect {
+        color: red;
+      }
+      button {
+        display: inline-block;
+        margin-top: 16px;
+        padding: 10px 20px;
+        background-color: navy;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: darkblue;
+      }
     `;
+  }
+
+  handleSelection(e) {
+    const value = e.target.value;
+    if (e.target.checked) {
+      this.selectedAnswers = [...this.selectedAnswers, value]; 
+    } else {
+      this.selectedAnswers = this.selectedAnswers.filter(ans => ans !== value); 
+    }
+  }
+
+  checkAnswer() {
+    const correctAnswers = ['Genji']; 
+    const isCorrect = this.selectedAnswers.length === correctAnswers.length &&
+                      this.selectedAnswers.every(ans => correctAnswers.includes(ans));
+
+    this.feedback = isCorrect ? "HES HIM" : "Nah"; 
   }
 
   render() {
@@ -95,22 +141,47 @@ export class MyCard extends LitElement {
       <div class="card">
         <h1 class="card__head">${this.title}</h1>
          <details ?open="${this.fancy}" @toggle="${this.openChanged}">
-          <summary>Description</summary>
+          <summary> Hack the web and come on down to our free classes.</summary>
           <div>
             <slot>${this.description}</slot>
+          </div>
+          <button class="card__apply">
+            <a href="${this.link}" class="card__link">Details</a>
+          </button>
+          <div class="multiple-choice">
+            <p>Whos the best hero?</p>
+            <label>
+              <input type="checkbox" value="Reaper" @change="${this.handleSelection}"> Reaper
+            </label>
+            <br />
+            <label>
+              <input type="checkbox" value="Genji" @change="${this.handleSelection}"> Genji
+            </label>
+            <br />
+            <label>
+              <input type="checkbox" value="Dva" @change="${this.handleSelection}"> Dva
+            </label>
+            <br />
+            <label>
+              <input type="checkbox" value="Some Guy" @change="${this.handleSelection}"> Some Guy
+            </label>
+            <br />
+            <button @click="${this.checkAnswer}">Check Answer</button>
+            <div class="feedback ${this.feedback.includes('Incorrect') ? 'incorrect' : ''}">
+              ${this.feedback}
+            </div>
           </div>
         </details>
         <img class="card__img" src="${this.imgSrc}" alt="Card Image">
         <p class="card__ad">${this.adText}</p>
-        <button class="card__apply">
-          <a href="${this.link}" class="card__link">Details</a>
-        </button>
       </div>
     `;
   }
- openChanged(e) {
+
+  openChanged(e) {
     this.fancy = e.target.open;
   }
 }
 
 customElements.define(MyCard.tag, MyCard);
+
